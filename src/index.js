@@ -12,12 +12,9 @@ const { Status, SopClass } = require('dcmjs-dimse').constants;
 /**
  * Extracts privacy-compliant initials from a DICOM patient name (LAST^FIRST^MIDDLE).
  */
-function getInitials(dicomName) {
-  if (!dicomName) return '?';
-  const str = typeof dicomName === 'string'
-    ? dicomName
-    : (dicomName[0]?.Alphabetic || '');
-  const parts = str.split('^').filter(Boolean);
+function getInitials(patientName) {
+  if (!patientName) return '?';
+  const parts = patientName.split('^').filter(Boolean);
   if (parts.length === 0) return '?';
   const lastName = parts[0] || '';
   const firstName = parts[1] || '';
@@ -36,6 +33,16 @@ function formatTime(dicomTime) {
 }
 
 /**
+ * Extracts the patient name string from a DICOM PatientName value.
+ * Handles both string and dcmjs structured format ({Alphabetic: "..."}).
+ */
+function getPatientName(dicomName) {
+  if (!dicomName) return '';
+  if (typeof dicomName === 'string') return dicomName;
+  return dicomName[0]?.Alphabetic || '';
+}
+
+/**
  * Converts a dcmjs-dimse MWL response dataset into a plain JS object.
  */
 function parseWorklistItem(ds) {
@@ -46,8 +53,10 @@ function parseWorklistItem(ds) {
     ? spsSeq[0]
     : (typeof spsSeq === 'object' ? spsSeq : {});
 
+  const patientName = getPatientName(el.PatientName);
+
   return {
-    initials: getInitials(el.PatientName || ''),
+    patient_name: patientName,
     patient_id: String(el.PatientID || ''),
     modality: String(sps.Modality || ''),
     exam_description: String(
@@ -190,4 +199,4 @@ class WorklistClient {
   }
 }
 
-module.exports = { WorklistClient, parseWorklistItem, getInitials, formatTime };
+module.exports = { WorklistClient, parseWorklistItem, getInitials, getPatientName, formatTime };

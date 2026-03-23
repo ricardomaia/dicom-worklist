@@ -74,7 +74,7 @@ Each item returned by `queryWorklist` has the following shape:
 
 ```js
 {
-  initials: 'J.S.',           // Patient initials (LGPD-compliant)
+  patient_name: 'DOE^JOHN^M',     // Full DICOM patient name (LAST^FIRST^MIDDLE)
   patient_id: 'WL-001',
   modality: 'CT',
   exam_description: 'CT CHEST WITHOUT CONTRAST',
@@ -87,7 +87,18 @@ Each item returned by `queryWorklist` has the following shape:
 }
 ```
 
-> **Note:** `initials` returns only the first letter of given name + last name (e.g. `J.S.`), not the full patient name. This is intentional for LGPD/GDPR compliance.
+### Utility functions
+
+For privacy compliance (LGPD/GDPR), use the exported `getInitials()` helper:
+
+```js
+const { WorklistClient, getInitials } = require('dicom-worklist');
+
+const items = await client.queryToday();
+for (const item of items) {
+  console.log(getInitials(item.patient_name)); // 'J.D.'
+}
+```
 
 ## PACS Configuration
 

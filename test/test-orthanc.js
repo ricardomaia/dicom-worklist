@@ -8,7 +8,7 @@
  * Usage: node test/test-orthanc.js [host] [port]
  */
 
-const { WorklistClient } = require('../src/index');
+const { WorklistClient, getInitials } = require('../src/index');
 
 const host = process.argv[2] || 'localhost';
 const port = parseInt(process.argv[3] || '4242', 10);
@@ -51,20 +51,20 @@ async function main() {
   // 4. Display table
   console.log(
     'Time'.padEnd(6) +
-    'Init.'.padEnd(6) +
+    'Patient'.padEnd(25) +
     'Mod'.padEnd(5) +
     'Station'.padEnd(18) +
     'Exam'.padEnd(45) +
     'Accession'
   );
-  console.log('-'.repeat(95));
+  console.log('-'.repeat(114));
 
   const sorted = results.sort((a, b) => a.scheduled_time.localeCompare(b.scheduled_time));
 
   for (const item of sorted) {
     console.log(
       (item.scheduled_time || '--:--').padEnd(6) +
-      item.initials.padEnd(6) +
+      item.patient_name.slice(0, 23).padEnd(25) +
       item.modality.padEnd(5) +
       item.station_name.padEnd(18) +
       item.exam_description.slice(0, 43).padEnd(45) +
@@ -79,7 +79,7 @@ async function main() {
 
   for (const item of ctResults) {
     console.log(
-      `  ${item.scheduled_time} | ${item.initials} | ${item.station_name} | ${item.exam_description}`
+      `  ${item.scheduled_time} | ${getInitials(item.patient_name)} | ${item.station_name} | ${item.exam_description}`
     );
   }
 
