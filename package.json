@@ -1,0 +1,42 @@
+{
+  "name": "dicom-worklist",
+  "version": "1.0.0",
+  "description": "DICOM Modality Worklist (MWL) C-FIND client for Node.js. Query scheduled procedures from any PACS supporting MWL SOP Class.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node test/test-orthanc.js"
+  },
+  "keywords": [
+    "dicom",
+    "worklist",
+    "mwl",
+    "pacs",
+    "c-find",
+    "dimse",
+    "radiology",
+    "healthcare",
+    "orthanc",
+    "hl7"
+  ],
+  "author": "Ricardo Maia <rsmaia@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ricardomaia/dicom-worklist.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ricardomaia/dicom-worklist/issues"
+  },
+  "homepage": "https://github.com/ricardomaia/dicom-worklist#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "src/",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "dcmjs-dimse": "^0.3.2"
+  }
+}
