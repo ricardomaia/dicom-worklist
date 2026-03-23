@@ -1,5 +1,8 @@
 # dicom-worklist
 
+[![CodeQL](https://github.com/ricardomaia/dicom-worklist/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/ricardomaia/dicom-worklist/actions/workflows/github-code-scanning/codeql)
+[![Security Policy](https://img.shields.io/badge/security-policy-green)](SECURITY.md)
+
 DICOM Modality Worklist (MWL) client for Node.js.
 
 Query scheduled procedures from any PACS that supports the **Modality Worklist Information Model - FIND** SOP Class (`1.2.840.10008.5.1.4.31`).
