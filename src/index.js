@@ -58,6 +58,10 @@ function parseWorklistItem(ds) {
   return {
     patient_name: patientName,
     patient_id: String(el.PatientID || ''),
+    patient_birth_date: String(el.PatientBirthDate || ''),
+    patient_sex: String(el.PatientSex || ''),
+    patient_age: String(el.PatientAge || ''),
+    patient_weight: String(el.PatientWeight || ''),
     modality: String(sps.Modality || ''),
     exam_description: String(
       sps.ScheduledProcedureStepDescription ||
@@ -68,7 +72,16 @@ function parseWorklistItem(ds) {
     station_aet: String(sps.ScheduledStationAETitle || ''),
     scheduled_date: String(sps.ScheduledProcedureStepStartDate || ''),
     scheduled_time: formatTime(String(sps.ScheduledProcedureStepStartTime || '')),
+    scheduled_procedure_step_id: String(sps.ScheduledProcedureStepID || ''),
+    scheduled_procedure_step_status: String(sps.ScheduledProcedureStepStatus || ''),
+    performing_physician: String(sps.ScheduledPerformingPhysicianName || ''),
     accession_number: String(el.AccessionNumber || ''),
+    institution_name: String(el.InstitutionName || ''),
+    referring_physician: String(el.ReferringPhysicianName || ''),
+    requesting_physician: String(el.RequestingPhysician || ''),
+    study_description: String(el.StudyDescription || ''),
+    study_instance_uid: String(el.StudyInstanceUID || ''),
+    requested_procedure_id: String(el.RequestedProcedureID || ''),
   };
 }
 
@@ -143,7 +156,15 @@ class WorklistClient {
         PatientBirthDate: '',
         PatientSex: '',
         AccessionNumber: '',
+        InstitutionName: '',
+        ReferringPhysicianName: '',
+        StudyDescription: '',
+        StudyInstanceUID: '',
         RequestedProcedureDescription: '',
+        RequestedProcedureID: '',
+        RequestingPhysician: '',
+        PatientAge: '',
+        PatientWeight: '',
         ScheduledProcedureStepSequence: [
           {
             ScheduledStationAETitle: filters.stationAet || '',
